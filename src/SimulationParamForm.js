@@ -8,10 +8,11 @@ const formErrorStyle = "py-1 leading-4 text-sm text-red-500";
 
 export const SimulationParamForm = ({processing, setSimStart}) => {
     const {register, reset, handleSubmit, formState: {errors}} = useForm();
+    const [disableForm, setDisableForm] = useState(false);
     const [message, setMessage] = useState(undefined);
 
-    const inputStyle = `flex bg-white px-2 py-1 text-sm rounded-sm ${processing.inProgress ? 'text-gray-400' : 'text-black'}`
-    const submitButtonStyle = `font-semibold px-2 py-2 my-2 rounded-sm ${processing.inProgress ? 'bg-blue-300 text-gray-300' : 'bg-blue-700 text-white'}`
+    const inputStyle = `flex bg-white px-2 py-1 text-sm rounded-sm ${processing.inProgress || disableForm ? 'text-gray-400' : 'text-black'}`
+    const submitButtonStyle = `font-semibold px-2 py-2 my-2 rounded-sm ${processing.inProgress || disableForm ? 'bg-blue-300 text-gray-300' : 'bg-blue-700 text-white'}`
 
     useEffect(() => {
         let defaultValues = {};
@@ -37,6 +38,7 @@ export const SimulationParamForm = ({processing, setSimStart}) => {
 
     const onSubmit = async (data) => {
         setMessage(undefined);
+        setDisableForm(true);
         const status = await submitJob(data);
 
         if (status === "SUCCESS")
@@ -47,6 +49,7 @@ export const SimulationParamForm = ({processing, setSimStart}) => {
             setMessage("Invalid parameters");
         else
             setMessage("Unknown error submitting job");
+        setDisableForm(false);
     }
 
     return (
