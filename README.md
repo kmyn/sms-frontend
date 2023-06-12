@@ -8,10 +8,10 @@ note the url and provide that in the Dockerfile. Example:
 `ENV REACT_APP_API_URL 'http://127.0.0.1:5000/'`
 (currently this is the default)
 
-#### Step 1: Build Docker image
+#### Step 1: Run script to build and run docker image
 
-`docker build -f Dockerfile -t sim-client .`
+`sh run.sh`
 
-#### Step 2: Run Docker image
+#### Step 2: In browser open
 
-`docker run -it -d -p 3000:80 sim-client`
+`http://localhost:3000/` (localhost can be replaced by the system IP where the container is running)

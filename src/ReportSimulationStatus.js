@@ -24,8 +24,6 @@ export const ReportSimulationStatus = ({processing, processingComplete}) => {
         }
     }
 
-    console.log(JSON.stringify(update));
-
     useEffect(() => {
         async function getSimulationStatusWrapper() {
             await getSimulationStatus()
@@ -49,8 +47,8 @@ export const ReportSimulationStatus = ({processing, processingComplete}) => {
     return (
         <div className="flex flex-col my-5 mx-auto">
             <div className="my-1 text-center text-lg font-bold">Simulation Status</div>
-            <div className="flex flex-col p-5 rounded-md text-sm md:text-md">
-                {!update.hasOwnProperty("message") &&
+            {!update.hasOwnProperty("message") &&
+                <div className="p-5 rounded-md bg-gray-100 text-sm md:text-md">
                     <>
                         <table className="table-auto w-80 md:w-96">
                             <tbody>
@@ -81,7 +79,10 @@ export const ReportSimulationStatus = ({processing, processingComplete}) => {
                             <span className="pl-5 font-medium">{update["updateTime"]}</span>
                         </div>
                     </>
-                }
+                </div>
+            }
+
+            <div className="flex flex-col p-5 text-sm md:text-md">
                 {update.hasOwnProperty("message") && update["message"].length &&
                     <div className="text-center pt-3 text-sm font-bold text-red-500">
                         {update.message}
